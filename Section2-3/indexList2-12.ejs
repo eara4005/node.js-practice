@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+    <title><%=title %></title>
+    <style>
+        h1 {
+            font-size: 60pt;
+            color: #eee;
+            text-align: right;
+            margin: 0px;
+        }
+
+        body{
+            font-size: 14pt;
+            color: #999;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <head>
+        <h1><%=title %></h1>
+    </head>
+    <div role="main">
+        <!-- <％= 変数 ％>: ejsの独自機能。指定の変数の値が書き出される -->
+        <p><%=content %></p> 
+    </div>
+</body>
+</html>
