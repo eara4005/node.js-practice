@@ -44,27 +44,12 @@ function getFromCliant(request, response) {
     }
 }
 
+// 追加するデータ用変数
+var data = { msg: 'no message ...' };
+
 // indexのアクセス処理
 function response_index(request, response) {
-    var msg = "これはIndexページです。";
-    var content = ejs.render(index_page, {
-        title: 'Index',
-        content: msg,
-    });
-    response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.write(content);
-    response.end();
-}
-
-// otherのアクセス処理
-function response_other(request, response) {
-    var msg = "これはOtherページです。";
-    var content = ejs.render(index_page, {
-        title: 'Other',
-        content: msg,
-    });
-
-    // POSTアクセス時の処理
+    // postアクセス時の処理
     if (request.method == 'POST') {
         var body = '';
 
@@ -75,26 +60,32 @@ function response_other(request, response) {
 
         // データ受信終了のイベント処理
         request.on('end', () => {
-            var post_data = qs.parse(body); // データのパース
-            msg += 'あなたは、「' + post_data.msg + '」と書きました。';
-            var content = ejs.render(other_page, {
-                title: "Other",
-                content: msg,
-            });
-            response.writeHead(200, { 'Content-Type': 'text/html' });
-            response.write(content);
-            response.end();
-        });
+            data = qs.parse(body); //データのパース
 
-        // GETアクセス時の処理
-    } else {
-        var msg = "ページがありません。";
-        var content = ejs.render(other_page, {
-            title: "Other",
-            content: msg,
+            //クッキー情報の保存
+            setCookie('msg',data.msg,response);
+            write_index(request, response);
         });
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.write(content);
-        response.end();
+    } else {
+        write_index(request,response);
     }
+}
+
+// indexの表示作成
+function write_index(request,response){
+    var msg = "※伝言を受信します。"
+    var content = ejs.render(index_page,{
+        title: "Index",
+        content: msg,
+        data:data,
+    });
+    response.writeHead(200,{'Content-Type':'text/html'});
+    response.write(content);
+    response.end();
+
+// クッキーの値を設定
+function setCookie(key,value,response){
+    var cookie = escape(value);
+    response.setHeader('Set-Cookie');
+}
 }

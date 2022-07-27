@@ -13,13 +13,20 @@
     <div role="main">
         <!-- <％= 変数 ％>: ejsの独自機能。指定の変数の値が書き出される -->
         <p><%=content %></p>
-        <!-- form処理を記述 /otherにPOST送信-->
-        <form method="post" action="other">
-            <p>
-                <input type="text" name="msg">
-                <input type="submit" value="Click">
-            </p>
-        </form>
+        <p><table style="width: 400px;">
+            <tr><th>伝言です。</th></tr>
+            <tr><td><%=data.msg %></td></tr>
+        </table></p>
+
+        <!-- クッキー情報の表示 -->
+        <p>Your last message:<%= cookie_data %></p>
+
+        <p>
+            <form method="post" action="/">
+                MESSAGE <input type="text" name="msg">
+                <input type="submit" value="送信">
+            </form>
+        </p>
     </div>
 </body>
 </html>

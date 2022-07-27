@@ -1,0 +1,15 @@
+<!-- パーシャルの作成　vueで言うところのテンプレート -->
+<!-- <tr>
+    <th><%=key %></th>
+    <td><%=data[key] %></td>
+</tr> -->
+
+<!-- パーシャルの内容を変更する -->
+<tr>
+    <table>
+        <tr><th><%= key %></th></tr>
+        <% for(var i in val){ %>
+            <tr><td><%= val[i] %></td></tr>
+        <% } %>
+    </table>
+</tr>
